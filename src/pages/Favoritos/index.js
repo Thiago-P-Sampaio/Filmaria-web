@@ -10,7 +10,7 @@ export default function Favoritos(){
     const [ loading, setLoading]  = useState(true);
 
     useEffect(() => {
-    
+        setLoading(true);
         try{
             const minhaLista = localStorage.getItem('@filmesCIA');
             setFilmes(JSON.parse(minhaLista) || []);
@@ -19,6 +19,8 @@ export default function Favoritos(){
             console.error('Erro ao ler os filmes favoritos', error);
             toast.error('Erro ao carregar os  filmes favoritos'); //Pop-up  de erro
             setFilmes([]) // Passando um objeto vazio caso de erro
+        } finally {
+            setLoading(false)
         }
     }, [])
 
@@ -44,4 +46,35 @@ export default function Favoritos(){
             </div>
         );
     }
+
+
+    return (
+    <div className="container">
+        <div className="meus-filmes">
+            <h1>Meus Filmes Favoritos</h1>
+            { filmes.length === 0 && ( // Caso não haja filmes salvos!
+                <span className="lista-vazia"> 
+                    Nenhum filme salvo!
+                </span>
+            ) }
+            
+            <ul>
+                {filmes.map((item) => (
+                    <li key={ item.id }>
+                        {/* verificar aqui */}
+                        <span>{ item.nome }</span> 
+                        <div className="acoes">
+                            <Link to={ `/filme/${ item.id }` }>
+                            Ver detalhes
+                            </Link>
+                            <button onClick={ () => Deletar(item.id) }>
+                                Excluir
+                            </button>
+                        </div>
+                    </li>
+                ))}
+            </ul>
+        </div>
+    </div>
+    );
 }
