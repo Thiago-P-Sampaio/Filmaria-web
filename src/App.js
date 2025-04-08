@@ -1,25 +1,17 @@
-import logo from './logo.svg';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import AppRoutes from './routes/';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css'; // Verificar aqui
 
-export default App;
+export default function App(){
+  return(
+    <div className='App'>
+      <AppRoutes />
+      {/* Vamos configurar o Toastify para fechar em 3 segundos */}
+      <ToastContainer autoClose ={3000} position='top-right' />
+        {/* Defiir o tempo de exibição  | posição     | Define para aplicação INTEIRA!*/}
+
+    </div>
+  )
+}
