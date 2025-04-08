@@ -17,8 +17,9 @@ export default function Filme(){
 
     useEffect(() => {
         async function lerFilme() {
-            setLoading(false);
             try {
+                setLoading(true); ///
+                const response = await api.get(`r-api/?api=filmes/${id}`)
                 // Vamos verificar se o filme foi encontrado!
                 // API pode retornar um array vazio ou um objeto vazio
                 if(!response.data || Array.isArray(response.data) && response.data.lenght === 0){ // Todas validações possíveis
@@ -31,6 +32,8 @@ export default function Filme(){
                 setLoading(false) 
             } catch(error){
                 console.error('Erro ao carregar o filme', error)
+            } finally {
+                setLoading(false); ///
             }
             
         }
@@ -66,6 +69,10 @@ export default function Filme(){
             </div>
         );
     }
+    
+    if (!filme) {
+        return <div className='container'>Filme não encontrado.</div>;
+    }
 
 
     return( // definindo os detalhes do filme em si!
@@ -81,7 +88,7 @@ export default function Filme(){
 
                          {/* Abrir em nova pag. | camada de segurança  */}
                         <a target="_blank" rel='noopener noreferrer' 
-                        href={ `https://www.youtube.com/results?search_query=${encondeURIComponent(filme.nome + ' trailer')}` }>Trailer</a>
+                         href={`https://www.youtube.com/results?search_query=${encodeURIComponent(filme.nome + ' trailer')}`} className="botao-link">Trailer</a>
                     </div>
                 </article>
             </div>
